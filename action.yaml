@@ -1,19 +1,31 @@
 name: "cancel-queued-runs"
-description: "Cancels queued workflow runs older than 24 hours"
+
+description: >
+  Automatically cancel GitHub Actions workflow runs that have been queued longer than
+  a configurable number of hours
+
 author: "Thibaut Durand"
+
 branding:
-  icon: 'clock'
-  color: 'blue'
+  icon: "clock"
+  color: "blue"
 
 inputs:
   github_token:
-    description: "Token with actions:write"
+    description: "GitHub token with actions:write permission."
     required: true
+
   repo:
-    description: "Target repository in owner/name format"
+    description: >
+      Target repository in owner/name format (e.g., 'octocat/hello-world').
     required: true
+
   max_age_hours:
-    description: "Maximum allowed queue age in hours"
+    description: >
+      Maximum number of hours a workflow run is allowed to stay queued before being
+      cancelled. Must be a positive integer. The action uses standard cancel for runs
+      between max_age_hours and max_age_hours+3, and force-cancel for runs older than
+      max_age_hours+3 hours.
     default: "24"
     required: false
 
@@ -27,5 +39,3 @@ runs:
         GH_TOKEN: ${{ inputs.github_token }}
         REPO: ${{ inputs.repo }}
         MAX_AGE_HOURS: ${{ inputs.max_age_hours }}
-
-

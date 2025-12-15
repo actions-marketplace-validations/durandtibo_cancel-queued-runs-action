@@ -2,7 +2,7 @@ name: Test Local Action
 
 on:
   workflow_call:
-  workflow_dispatch:  # to trigger manually
+  workflow_dispatch: # to trigger manually
 
 permissions:
   actions: write
@@ -16,18 +16,19 @@ jobs:
       max-parallel: 8
       fail-fast: false
       matrix:
-        os: [
-          ubuntu-latest,
-          ubuntu-24.04,
-          ubuntu-22.04,
-          ubuntu-24.04-arm,
-          ubuntu-22.04-arm,
-          macos-latest,
-          macos-26,
-          macos-15,
-          macos-14,
-          macos-15-intel,
-        ]
+        os:
+          [
+            ubuntu-latest,
+            ubuntu-24.04,
+            ubuntu-22.04,
+            ubuntu-24.04-arm,
+            ubuntu-22.04-arm,
+            macos-latest,
+            macos-26,
+            macos-15,
+            macos-14,
+            macos-15-intel,
+          ]
 
     steps:
       - name: Checkout
@@ -39,8 +40,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           repo: ${{ github.repository }}
 
-  test-12h:
+  test-48h:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -50,4 +52,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           repo: ${{ github.repository }}
-          max_age_hours: 12
+          max_age_hours: 48
